@@ -1,9 +1,8 @@
 ﻿CREATE TABLE [dbo].[User_Stats]
 (
-	[User_Stats_Id] INT PRIMARY KEY IDENTITY,
-    [UserID] INT,
+	[User_Stats_Id] INT NOT NULL IDENTITY,
     [Alias] VARCHAR(50),
-    [ScoreMax] INT DEFAULT 0,
+    [LevelMax] INT DEFAULT 0,
     [DeathNumber] INT DEFAULT 0,
     [KillNumber] INT DEFAULT 0,
     [BonusNumber] INT DEFAULT 0,
@@ -14,7 +13,12 @@
     [SuccessRate] INT DEFAULT 0,
     [Rank] CHAR DEFAULT 'F'
 
-    CONSTRAINT FK_UserStats_UserID FOREIGN KEY (UserID)
-    REFERENCES [User](Id)
+    --CONSTRAINT [FK_UserStats_UserID] FOREIGN KEY ([UserID])
+    --REFERENCES [dbo].[User]([Id])
+    CONSTRAINT [PK_UserStats] PRIMARY KEY CLUSTERED([User_Stats_Id]),
+    CONSTRAINT [FK_UserID] FOREIGN KEY ([User_Stats_Id])
+    REFERENCES [dbo].[User]([Id])
+    --ON DELETE CASCADE
+    --ON UPDATE CASCADE
 )
 

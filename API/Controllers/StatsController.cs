@@ -1,6 +1,7 @@
-﻿using DAL.Entities;
+﻿using DAL.DTO;
+using DAL.Entities;
+using DAL.Interfaces;
 using DAL.Repositories;
-using DAL.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,16 +17,23 @@ namespace API.Controllers
             this.userstatservice = userStatService;
         }
 
-        [HttpGet("Get_Stats")]
-        public async Task<IActionResult> GetStats(int id)
+        [HttpGet("GetAllStats")]
+        public async Task<IActionResult> GetAllStats()
         {
-            return Ok(await userstatservice.GetStatistic(id));
+            return Ok(await userstatservice.GetAllStatistic());
         }
 
-        [HttpPost("Set_Stats")]
-        public async Task<IActionResult> SetStats(int id, User_Stats stats)
+        [HttpGet("GetStatById/{id}")]
+        public async Task<IActionResult> GetStatById(int id)
         {
-            return Ok(await userstatservice.SetStatistic(id, stats));
+            return Ok(await userstatservice.GetStatById(id));
+        }
+
+        [HttpPut("UpdateStats")]
+        public IActionResult UpdateStats(int id, User_StatsUpdateDTO stats)
+        {
+            userstatservice.UpdateStatistics(id, stats);
+            return Ok();
         }
     }
 }

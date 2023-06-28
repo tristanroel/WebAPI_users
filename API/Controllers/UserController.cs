@@ -1,6 +1,9 @@
-﻿using DAL.DTO;
+﻿using BLL.Interfaces;
+using DAL.DTO;
 using DAL.Entities;
-using DAL.Repositories;
+using DAL.Interfaces;
+using DAL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,25 +13,26 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository userservice;
+        private readonly IUserService userservice;
 
-        public UserController(IUserRepository userService){
+        public UserController(IUserService userService)
+{
             this.userservice = userService;
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll(){
-            return Ok(await userservice.GetAll());
+        public ActionResult<IEnumerable<UserViewModel>> GetAll(){
+            return Ok(userservice.GetAll());
         }
 
         [HttpGet("GetByid/{id}")]
-        public async Task<IActionResult> GetById(int id){
-            return Ok(await userservice.GetById(id));
+        public IActionResult GetById(int id){
+            return Ok(userservice.GetById(id));
         }
 
         [HttpGet("GetbyAlias/{alias}")]
-        public async Task<IActionResult> GetByAlias(string alias){
-            return Ok(await userservice.GetByAlias(alias));
+        public IActionResult GetByAlias(string alias){
+            return Ok(userservice.GetByAlias(alias));
         }
 
         //L'attribut [FromBody] permet de lier les données JSON aux propriétés correspondantes de l'objet UserRegisterDTO passé en paramètre.
@@ -49,9 +53,87 @@ namespace API.Controllers
                  return BadRequest();
             }
             else{
-                 userservice.LoginUser(user);
-                 return Ok();
+                string jwt = userservice.LoginUser(user);
+                Console.WriteLine(jwt);
+                if(!string.IsNullOrEmpty(jwt))
+                {
+                    return Ok(jwt);
+                }
+                else 
+                { 
+                    return BadRequest(); 
+                }
             } 
+        }
+        //[Authorize]
+        [HttpPatch("UpdateAlias/{id}")]
+        public IActionResult UpdateByAlias(int id, UserAliasUpdateDTO user) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                userservice.UpdateAlias(id, user);
+                return Ok();
+            }
+        }
+
+        [HttpPatch("UpdateAvatar/{id}")]
+        public IActionResult UpdateAvatar(int id, UserAvatarUpdateDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                userservice.UpdateAvatar(id, user);
+                return Ok();
+            }
+        }
+
+        [HttpPatch("UpdateCountry/{id}")]
+        public IActionResult UpdateCountry(int id, UserCountryUpdateDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                userservice.UpdateCountry(id, user);
+                return Ok();
+            }
+        }
+
+        [HttpPatch("UpdateCredit/{id}")]
+        public IActionResult UpdateCredit(int id, UserCreditsUpdateDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                userservice.UpdateCredit(id, user);
+                return Ok();
+            }
+        }
+
+        [HttpPatch("UpdateScore/{id}")]
+        public IActionResult UpdateScore(int id, UserScoreUpdateDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                userservice.UpdateScore(id, user);
+                return Ok();
+            }
         }
 
         [HttpPut("Update/{id}")]
@@ -67,8 +149,8 @@ namespace API.Controllers
 
         [HttpDelete("Delete/{id}")]
         public IActionResult DeleteUser(int id){
-            userservice.DeleteUser(id);
-            return Ok();   
+            Console.WriteLine(userservice.DeleteUser(id));
+            return userservice.DeleteUser(id) ? Ok() : BadRequest();
         }
     }
 }

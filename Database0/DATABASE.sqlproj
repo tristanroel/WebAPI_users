@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>DATABASE01</Name>
+    <Name>DATABASE</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{4409d7e4-58a7-44e2-94d3-dd0f54ef8c7b}</ProjectGuid>
@@ -69,6 +69,13 @@
     <Build Include="Tables\User_Stats.sql" />
     <Build Include="Functions\StoredProcedure\UpdateUser.sql" />
     <Build Include="Tables\Success.sql" />
+    <Build Include="Functions\StoredProcedure\DeleteUser.sql" />
+    <Build Include="Tables\Friend.sql" />
+    <Build Include="Functions\StoredProcedure\SetUserScore.sql" />
+    <Build Include="Functions\StoredProcedure\UpdateUserStats.sql" />
+    <Build Include="Functions\StoredProcedure\UpdateSuccess.sql" />
+    <Build Include="Functions\StoredProcedure\CheckEmail.sql" />
+    <Build Include="Functions\StoredProcedure\AddNewFriend.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />

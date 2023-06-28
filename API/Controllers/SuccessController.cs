@@ -1,5 +1,6 @@
-﻿using DAL.Entities;
-using DAL.Repositories;
+﻿using DAL.DTO;
+using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,17 +18,24 @@ namespace API.Controllers
         [HttpGet("GetAllSuccess")]
         public async Task<IActionResult> GetAllSuccess()
         {
-            return Ok(await successervice.GetAllSuccess());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(await successervice.GetAllSuccess());
+            }
         }
 
-        [HttpGet("GetSuccessById")]
+        [HttpGet("GetSuccessById/{id}")]
         public async Task<IActionResult> GetSuccessById(int id)
         {
-            return View(await successervice.GetSuccessById(id));
+            return Ok(await successervice.GetSuccessById(id));
         }
 
         [HttpPost("AddSuccess")]
-        public IActionResult AddSuccess([FromBody]Success success){
+        public IActionResult AddSuccess([FromBody]AddSuccessDTO success){
             if (!ModelState.IsValid){
                 return BadRequest();
             }
@@ -35,6 +43,24 @@ namespace API.Controllers
                 successervice.AddSuccess(success);
                 return Ok();
             }
+        }
+
+        [HttpPut("EditSuccess")]
+        public IActionResult UpdateSuccess(int id,[FromBody]AddSuccessDTO success){
+            if (!ModelState.IsValid){
+                return BadRequest();
+            }
+            else{
+                successervice.UpdateSuccess(id, success);
+                return Ok();
+            }
+        }
+
+        [HttpDelete("DeleteSuccess")]
+        public IActionResult DeleteSuccess(int id) 
+        {
+            successervice.DeleteSuccess(id);
+            return Ok();
         }
     }
 }

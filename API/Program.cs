@@ -1,34 +1,63 @@
+using BLL.Interfaces;
+using BLL.Services;
+using DAL.Interfaces;
 using DAL.Repositories;
-using DAL.Services;
-using System.Data;
-using System.Data.SqlClient;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
-// Add services to the container.
+
+//Add services to the container.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["jwt:issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["jwt:audience"],
+
+            ValidateLifetime = true,
+
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"]))
+        };
+    });
+
+//BLL
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IUserService, UserService>();
+//DAL
+builder.Services.AddScoped<IUserRepository, UserRepository>(sp =>
+    new UserRepository(
+        new System.Data.SqlClient.SqlConnection(
+            builder.Configuration.GetConnectionString("default"))));
+
+builder.Services.AddScoped<IUser_StatsRepository, User_StatsRepository>(sp =>
+    new User_StatsRepository(
+        new System.Data.SqlClient.SqlConnection(
+            builder.Configuration.GetConnectionString("default"))));
+
+builder.Services.AddScoped<ISuccessRepository, SuccessRepository>(sp =>
+    new SuccessRepository(
+        new System.Data.SqlClient.SqlConnection(
+            builder.Configuration.GetConnectionString("default"))));
+
+builder.Services.AddScoped<IFriendRepository, FriendsRepository>(sp =>
+    new FriendsRepository(
+        new System.Data.SqlClient.SqlConnection(
+            builder.Configuration.GetConnectionString("default"))));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-builder.Services.AddScoped<IUserRepository, UserService>(sp =>
-    new UserService(
-        new System.Data.SqlClient.SqlConnection(
-            builder.Configuration.GetConnectionString("default"))));
-
-builder.Services.AddScoped<IUser_StatsRepository, User_StatsService>(sp =>
-    new User_StatsService(
-        new System.Data.SqlClient.SqlConnection(
-            builder.Configuration.GetConnectionString("default"))));
-
-builder.Services.AddScoped<ISuccessRepository, SuccessService>(sp =>
-    new SuccessService(
-        new System.Data.SqlClient.SqlConnection(
-            builder.Configuration.GetConnectionString("default"))));
-
 
 var app = builder.Build();
 

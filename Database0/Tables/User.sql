@@ -10,6 +10,6 @@
     [Passwd] VARBINARY(64) NOT NULL, 
     [Salt] VARCHAR(100),
     [IsAdmin] BIT DEFAULT 0,
-    CONSTRAINT [PK_User] PRIMARY KEY ([Id]),
+    CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([Id]),
     CONSTRAINT [UK_User_Email] UNIQUE ([Email])
 )
