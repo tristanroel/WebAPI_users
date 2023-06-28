@@ -26,10 +26,6 @@ BEGIN
 	INSERT INTO [dbo].[User](Alias,Email, Passwd, Salt)
     VALUES (@Alias ,@Email, @PasswdHash, @Salt)
 
-    --ALTER TABLE [dbo].[User_Stats]
-    --ADD CONSTRAINT FK_UserStats_UserID
-    --FOREIGN KEY (UserID) REFERENCES [User](Id);
-
     INSERT INTO [dbo].[User_Stats](Alias) --SET STATS
     VALUES (@Alias)
 
