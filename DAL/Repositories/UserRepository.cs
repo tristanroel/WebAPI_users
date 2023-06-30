@@ -60,7 +60,7 @@ namespace DAL.Repositories
             try
             {
                 var procedure = "UpdateUser";
-                var param = new {user.Id, user.Alias, user.Email,user.Passwd, user.AvatarUrl, user.Country};
+                var param = new {user.Id, user.Alias, user.Email,user.Passwd, user.AvatarUrl, user.Country, user.Score, user.Credits};
                 return _connection.ExecuteScalar<User>(procedure, param, commandType: CommandType.StoredProcedure);
 
             }catch (Exception e)
@@ -91,7 +91,7 @@ namespace DAL.Repositories
         {
             try
             {
-                string sql = "SELECT * FROM [dbo].[User]";
+                string sql = "SELECT * FROM [dbo].[User] ORDER BY [Score] DESC";
                 return _connection.Query<UserViewModel>(sql);
             }
             catch (Exception ex)
@@ -126,7 +126,19 @@ namespace DAL.Repositories
 
         public bool EmailAlreadyUsed(string email)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var procedure = "CheckEmail";
+                var param = new { Email = email };
+                int result = _connection.Execute(procedure, param, commandType: CommandType.StoredProcedure);
+                return result != 0 ? true : false;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
         }
     }
 }

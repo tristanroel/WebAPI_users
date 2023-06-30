@@ -13,7 +13,7 @@ namespace DAL.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int User_Stats_Id { get; set; }
-        public string? Alias { get; set; }
+        //public string? Alias { get; set; }
         public int LevelMax { get; set; }
         public int DeathNumber { get; set; }
         public int KillNumber { get; set; }

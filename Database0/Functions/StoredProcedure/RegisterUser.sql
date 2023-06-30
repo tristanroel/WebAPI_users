@@ -26,8 +26,13 @@ BEGIN
 	INSERT INTO [dbo].[User](Alias,Email, Passwd, Salt)
     VALUES (@Alias ,@Email, @PasswdHash, @Salt)
 
-    INSERT INTO [dbo].[User_Stats](Alias) --SET STATS
-    VALUES (@Alias)
+    DECLARE @Id_ref INT 
+    SET @Id_ref = SCOPE_IDENTITY()
+    INSERT INTO [dbo].[User_Stats](User_Stats_Id)
+    VALUES (@Id_ref)
+
+    --INSERT INTO [dbo].[User_Stats](Alias) --SET STATS
+    --VALUES (@Alias)
 
     RETURN 0;
 END

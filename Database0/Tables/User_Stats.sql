@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[User_Stats]
 (
-	[User_Stats_Id] INT NOT NULL IDENTITY,
-    [Alias] VARCHAR(50),
+	[User_Stats_Id] INT NOT NULL,
+    --[Alias] VARCHAR(50),
     [LevelMax] INT DEFAULT 0,
     [DeathNumber] INT DEFAULT 0,
     [KillNumber] INT DEFAULT 0,

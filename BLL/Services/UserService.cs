@@ -45,16 +45,22 @@ namespace BLL.Services
 
         public string LoginUser(UserLoginDTO user)
         {
-
+                User? u = _userRepository.LoginUser(user.FromUserLoginDTOToUser());
+                return _jwtservice.GenerateToken(u);
             //_userRepository.LoginUser(user.FromUserLoginDTOToUser())?.ToUserViewModel();
             //return "ok";
-            User? u = _userRepository.LoginUser(user.FromUserLoginDTOToUser());
-            return _jwtservice.GenerateToken(u);
         }
 
         public UserViewModel? RegisterUser(UserRegisterDTO user)
         {
-            return _userRepository.RegisterUser(user.FromUserRegisterDTOToUser())?.ToUserViewModel();
+            if (_userRepository.EmailAlreadyUsed(email: user.Email))
+            {
+                return _userRepository.RegisterUser(user.FromUserRegisterDTOToUser())?.ToUserViewModel();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public UserViewModel? UpdateUser(int id, UserUpdateDTO user)
@@ -92,7 +98,7 @@ namespace BLL.Services
 
         public UserViewModel? UpdateAvatar(int id, UserAvatarUpdateDTO user)
         {
-            User? u = _userRepository.GetById(id).ToUser();
+            User u = _userRepository.GetById(id).ToUser();
             if (u is not null)
             {
                 u.AvatarUrl = user.AvatarUrl;
@@ -106,7 +112,7 @@ namespace BLL.Services
 
         public UserViewModel? UpdateCountry(int id, UserCountryUpdateDTO user)
         {
-            User? u = _userRepository.GetById(id).ToUser();
+            User u = _userRepository.GetById(id).ToUser();
             if (u is not null)
             {
                 u.Country = user.Country;
@@ -120,7 +126,7 @@ namespace BLL.Services
 
         public UserViewModel? UpdateCredit(int id, UserCreditsUpdateDTO user)
         {
-            User? u = _userRepository.GetById(id).ToUser();
+            User u = _userRepository.GetById(id).ToUser();
             if (u is not null)
             {
                 u.Credits = user.Credits;
@@ -134,7 +140,7 @@ namespace BLL.Services
 
         public UserViewModel? UpdateScore(int id, UserScoreUpdateDTO user)
         {
-            User? u = _userRepository.GetById(id).ToUser();
+            User u = _userRepository.GetById(id).ToUser();
             if (u is not null)
             {
                 u.Score = user.Score;

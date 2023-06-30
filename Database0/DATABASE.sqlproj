@@ -75,7 +75,6 @@
     <Build Include="Functions\StoredProcedure\UpdateUserStats.sql" />
     <Build Include="Functions\StoredProcedure\UpdateSuccess.sql" />
     <Build Include="Functions\StoredProcedure\CheckEmail.sql" />
-    <Build Include="Functions\StoredProcedure\AddNewFriend.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />

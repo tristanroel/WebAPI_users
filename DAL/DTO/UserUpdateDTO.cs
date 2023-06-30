@@ -21,5 +21,7 @@ namespace DAL.DTO
         public string? Passwd { get; set; }
         public string? AvatarUrl { get; set; }
         public string? Country { get; set; }
+        public int Score { get; set; }
+        public int Credits { get; set; }
     }
 }

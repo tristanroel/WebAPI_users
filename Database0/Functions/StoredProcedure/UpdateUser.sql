@@ -4,7 +4,9 @@
 	@Email NVARCHAR(384),
 	@Passwd NVARCHAR(20),
 	@AvatarUrl NVARCHAR(250),
-    @Country NVARCHAR(50)
+    @Country NVARCHAR(50),
+    @Score INT,
+    @Credits INT
 AS
 BEGIN
 	DECLARE @Salt VARCHAR(100)
@@ -17,6 +19,6 @@ BEGIN
     SET @PasswdHash = HASHBYTES('SHA2_512', CONCAT( @Salt, @HashKey, @Passwd, @Salt))
 
     UPDATE [dbo].[User]
-    SET Alias = @Alias, Email = @Email, Passwd = @PasswdHash, AvatarUrl = @AvatarUrl, Country = @Country
+    SET Alias = @Alias, Email = @Email, Passwd = @PasswdHash, AvatarUrl = @AvatarUrl, Country = @Country, Score = @Score, Credits = @Credits
     WHERE  Id = @Id
 END

@@ -5,7 +5,6 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
@@ -29,6 +28,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"]))
         };
     });
+
+builder.Services.AddCors(o => o.AddPolicy("angular", option =>
+    option.WithOrigins("http://localhost:4200")
+    .AllowCredentials()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+));
 
 //BLL
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -67,6 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("angular");
 
 app.UseHttpsRedirection();
 
