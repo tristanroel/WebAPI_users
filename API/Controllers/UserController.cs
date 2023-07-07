@@ -53,15 +53,14 @@ namespace API.Controllers
                  return BadRequest();
             }
             else{
-                string jwt = userservice.LoginUser(user);
-                Console.WriteLine(jwt);
-                if(!string.IsNullOrEmpty(jwt))
+                try
                 {
+                    string jwt = userservice.LoginUser(user);
                     return Ok(jwt);
                 }
-                else 
-                { 
-                    return BadRequest(); 
+                catch(Exception ex)
+                {
+                    return BadRequest(ex.Message);
                 }
             } 
         }

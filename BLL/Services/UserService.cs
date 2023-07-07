@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Entities;
+using System.Diagnostics;
 
 namespace BLL.Services
 {
@@ -45,10 +46,10 @@ namespace BLL.Services
 
         public string LoginUser(UserLoginDTO user)
         {
-                User? u = _userRepository.LoginUser(user.FromUserLoginDTOToUser());
-                return _jwtservice.GenerateToken(u);
-            //_userRepository.LoginUser(user.FromUserLoginDTOToUser())?.ToUserViewModel();
-            //return "ok";
+            User? u = _userRepository.LoginUser(user.FromUserLoginDTOToUser());
+            Console.WriteLine(u);
+            return _jwtservice.GenerateToken(u);
+
         }
 
         public UserViewModel? RegisterUser(UserRegisterDTO user)

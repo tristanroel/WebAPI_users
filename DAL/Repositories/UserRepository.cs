@@ -24,18 +24,17 @@ namespace DAL.Repositories
             this._connection = connection;
         }
 
-        public User? LoginUser(User user)
+        public User LoginUser(User user)
         {
             try
             {
                 var procedure = "LoginUser";
-                var values = new { user.Email, user.Passwd};
-                return _connection.ExecuteScalar<User>(procedure, values, commandType : CommandType.StoredProcedure);
+                var values = new { Email = user.Email, Passwd = user.Passwd};
+                return _connection.QueryFirst<User>(procedure, values, commandType : CommandType.StoredProcedure);
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                throw new Exception(ex.Message);
             }
         }
 

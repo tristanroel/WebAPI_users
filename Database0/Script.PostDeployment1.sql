@@ -32,18 +32,29 @@ UPDATE [dbo].[User] SET IsAdmin = 1
 WHERE Id = 1
 GO
 
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (5,2);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (4,3);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (3,4);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (1,5);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (2,6);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (2,7);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (6,1);
+INSERT INTO [dbo].[Friend](User_Id,Friend_Id) VALUES (8,2);
+
+GO
+
 --Set Success
 INSERT INTO [dbo].[Success] ([Title], [Description], [ScoreMax],
 [DeathNumber], [KillNumber], [BonusNumber], [WeaponNumber], [BulletDamage], 
 [BossKill], [DragonKill], [SuccessRate], [Rank])
 VALUES
 --Title        -Description   -ScrM-
-('Success 1', 'Atteindre un score de 1000', 1000, 0, 0, 0, 0, 0, 0, 0, 0, 'F'),
-('Success 2', 'Atteindre un score de 2500', 2500, 0, 0, 0, 0, 0, 0, 0, 0, 'E'),
-('Success 3', 'Atteindre un score de 5000', 5000, 0, 0, 0, 0, 0, 0, 0, 0, 'D'),
-('Success 4', 'Atteindre un score de 10000', 10000, 0, 0, 0, 0, 0, 0, 0, 0, 'B'),
-('Success 5', 'Atteindre un score de 15000', 15000, 0, 0, 0, 0, 0, 0, 0, 0, 'A'),
-('Success 6', 'Atteindre un score de 20000', 20000, 0, 0, 0, 0, 0, 0, 0, 0, 'S'),
+('Le Début de la Gloire', 'Atteindre un score de 1000', 1000, 0, 0, 0, 0, 0, 0, 0, 0, 'F'),
+('Champion en Herbe', 'Atteindre un score de 2500', 2500, 0, 0, 0, 0, 0, 0, 0, 0, 'E'),
+('Mercenaire', 'Atteindre un score de 5000', 5000, 0, 0, 0, 0, 0, 0, 0, 0, 'D'),
+('Soldat', 'Atteindre un score de 10000', 10000, 0, 0, 0, 0, 0, 0, 0, 0, 'B'),
+('Puissant', 'Atteindre un score de 15000', 15000, 0, 0, 0, 0, 0, 0, 0, 0, 'A'),
+('Increvable', 'Atteindre un score de 20000', 20000, 0, 0, 0, 0, 0, 0, 0, 0, 'S'),
 ('Apprentissage', 'Mourrir au moins 10 fois', 0, 10, 0, 0, 0, 0, 0, 0, 0, 'F'),
 ('Le Gout du Sang', 'Abatre au moins 10 opposant', 0, 0, 10, 0, 0, 0, 0, 0, 0, 'F'),
 ('Gourmand va !', 'Ramasser 10 Bonus', 0, 0, 0, 10, 0, 0, 0, 0, 0, 'D'),

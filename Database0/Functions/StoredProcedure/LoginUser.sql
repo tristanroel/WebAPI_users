@@ -12,6 +12,5 @@ BEGIN
     DECLARE @PasswdHash VARBINARY(64)
     SET @PasswdHash = HASHBYTES('SHA2_512', CONCAT( @Salt, @HashKey, @Passwd, @Salt))
 
-    SELECT * FROM [dbo].[User] WHERE Email = @Email AND Passwd = @PasswdHash
-	RETURN 0 --ok
+    SELECT Id, Email, Alias, Country, Score, Credits, IsAdmin FROM [dbo].[User] WHERE Email = @Email AND Passwd = @PasswdHash
 END

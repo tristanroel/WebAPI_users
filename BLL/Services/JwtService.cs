@@ -25,16 +25,16 @@ namespace BLL.Services
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            //List<Claim> claims = new List<Claim>()
-            //{
-            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            //    new Claim(ClaimTypes.Email, user.Email),
-            //    new Claim(ClaimTypes.Role, user.IsAdmin == true ? "master" : "user".ToString())
-            //};
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                //new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.IsAdmin == true ? "master" : "regular")
+            };
 
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor()
             {
-                //Subject = new ClaimsIdentity(claims),
+                Subject = new ClaimsIdentity(claims),
                 Issuer = _configuration["jwt:issuer"],
                 Audience = _configuration["jwt:audience"],
                 Expires = DateTime.Now.AddDays(1),

@@ -28,6 +28,7 @@ BEGIN
 
     DECLARE @Id_ref INT 
     SET @Id_ref = SCOPE_IDENTITY()
+
     INSERT INTO [dbo].[User_Stats](User_Stats_Id)
     VALUES (@Id_ref)
 
