@@ -59,7 +59,7 @@ namespace DAL.Repositories
             try
             {
                 var procedure = "UpdateUser";
-                var param = new {user.Id, user.Alias, user.Email,user.Passwd, user.AvatarUrl, user.Country, user.Score, user.Credits};
+                var param = new {user.Id, user.Alias, user.Email, user.AvatarKey, user.FlagUrl, user.Country, user.Score, user.Credits};
                 return _connection.ExecuteScalar<User>(procedure, param, commandType: CommandType.StoredProcedure);
 
             }catch (Exception e)
@@ -121,6 +121,13 @@ namespace DAL.Repositories
             string sql = "SELECT * FROM [dbo].[User] WHERE Alias = @Alias";
             var param = new { Alias = alias };
             return _connection.QueryFirst<UserViewModel>(sql, param);
+        }
+
+        public IEnumerable<UserViewModel>? GetByCountry(string country)
+        {
+            string sql = "SELECT * FROM [dbo].[User] WHERE Country = @Country";
+            var param = new { Country = country };
+            return _connection.Query<UserViewModel>(sql, param);
         }
 
         public bool EmailAlreadyUsed(string email)

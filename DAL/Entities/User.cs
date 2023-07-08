@@ -12,13 +12,6 @@ namespace DAL.Entities
     public class User
     {
         public User() { }
-        //public User(string alias, string email, string passwd)
-        //{
-        //    Alias = alias;
-        //    Email = email;
-        //    Passwd = passwd;
-        //}
-
         public int Id { get; set; }
 
         //[MaxLength(15)]
@@ -30,7 +23,9 @@ namespace DAL.Entities
         public string Email { get; set; }
 
         //[MaxLength(50)]
-        public string AvatarUrl { get; set; }
+        public int AvatarKey { get; set; }
+
+        public string FlagUrl { get; set; }
 
         //[MaxLength(50)]
         public string Country { get; set; }

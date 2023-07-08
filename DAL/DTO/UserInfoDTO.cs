@@ -10,8 +10,9 @@ namespace DAL.DTO
     {
         public int Id { get; set; }
         public string? Alias { get; set; }
-        public string? AvatarUrl { get; set; }
+        public int AvatarKey { get; set; }
         public string? Country { get; set; }
+        public string? FlagUrl { get; set; }
         public int Score { get; set; }
     }
 }

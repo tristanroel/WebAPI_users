@@ -39,6 +39,12 @@ namespace BLL.Services
             return _userRepository.GetByAlias(alias);
         }
 
+        public IEnumerable<UserViewModel>? GetByCountry(string country)
+        {
+
+            return _userRepository.GetByCountry(country);
+        }
+
         public UserViewModel? GetById(int id)
         {
             return _userRepository.GetById(id);
@@ -54,14 +60,14 @@ namespace BLL.Services
 
         public UserViewModel? RegisterUser(UserRegisterDTO user)
         {
-            if (_userRepository.EmailAlreadyUsed(email: user.Email))
-            {
+            //if (_userRepository.EmailAlreadyUsed(email: user.Email))
+            //{
                 return _userRepository.RegisterUser(user.FromUserRegisterDTOToUser())?.ToUserViewModel();
-            }
-            else
-            {
-                return null;
-            }
+            //}
+            //else
+            //{
+            //    return ;
+            //}
         }
 
         public UserViewModel? UpdateUser(int id, UserUpdateDTO user)
@@ -70,7 +76,7 @@ namespace BLL.Services
             if (u is not null)
             {
                 u.Alias = user.Alias;
-                u.AvatarUrl = user.AvatarUrl;
+                u.AvatarKey = user.AvatarKey;
                 u.Email = user.Email;
                 u.Passwd = user.Passwd;
                 u.Country = user.Country;
@@ -102,7 +108,7 @@ namespace BLL.Services
             User u = _userRepository.GetById(id).ToUser();
             if (u is not null)
             {
-                u.AvatarUrl = user.AvatarUrl;
+                u.AvatarKey = user.AvatarKey;
                 return _userRepository.UpdateUser(u)?.ToUserViewModel();
             }
             else
@@ -117,6 +123,7 @@ namespace BLL.Services
             if (u is not null)
             {
                 u.Country = user.Country;
+                u.FlagUrl = user.FlagUrl;
                 return _userRepository.UpdateUser(u)?.ToUserViewModel();
             }
             else

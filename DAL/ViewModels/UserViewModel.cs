@@ -15,7 +15,9 @@ namespace DAL.ViewModels
 
         public string? Email { get; set; }
 
-        public string? AvatarUrl { get; set; }
+        public int AvatarKey { get; set; }
+
+        public string? FlagUrl { get; set; }
 
         public string? Country { get; set; }
 

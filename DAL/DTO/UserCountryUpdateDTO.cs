@@ -11,5 +11,6 @@ namespace DAL.DTO
     {
         [MaxLength(50)]
         public string? Country { get; set; }
+        public string? FlagUrl { get; set; }
     }
 }

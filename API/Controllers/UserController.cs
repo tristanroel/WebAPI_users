@@ -35,6 +35,12 @@ namespace API.Controllers
             return Ok(userservice.GetByAlias(alias));
         }
 
+        [HttpGet("GetbyCountry/{country}")]
+        public IActionResult GetByCountry(string country)
+        {
+            return Ok(userservice.GetByCountry(country));
+        }
+
         //L'attribut [FromBody] permet de lier les données JSON aux propriétés correspondantes de l'objet UserRegisterDTO passé en paramètre.
         [HttpPost("Register")]
         public IActionResult Register([FromBody] UserRegisterDTO user) {

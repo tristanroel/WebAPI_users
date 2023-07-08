@@ -12,6 +12,7 @@ namespace DAL.Interfaces
     public interface IUserRepository
     {
         IEnumerable<UserViewModel>? GetAll();
+        IEnumerable<UserViewModel>? GetByCountry(string country);
         UserViewModel GetById(int id);
         UserViewModel GetByAlias(string alias);
         User? LoginUser(User user);

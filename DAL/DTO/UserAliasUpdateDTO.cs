@@ -14,6 +14,6 @@ namespace DAL.DTO
         [DisplayName("ALIAS")]
         [StringLength(15, MinimumLength = 3)]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Veuillez entrez des lettres de a à Z")]
-        public string? Alias { get; set; }
+        public string Alias { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace DAL.DTO
 {
     public class UserAvatarUpdateDTO
     {
-        public string? AvatarUrl { get; set; }
+        public int AvatarKey { get; set; }
     }
 }

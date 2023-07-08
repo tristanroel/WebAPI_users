@@ -13,6 +13,7 @@ namespace BLL.Interfaces
         public IEnumerable<UserViewModel> GetAll();
         public UserViewModel? GetById(int id);
         public UserViewModel? GetByAlias(string alias);
+        public IEnumerable<UserViewModel> GetByCountry(string country);
         public UserViewModel? UpdateScore(int id, UserScoreUpdateDTO user);
         public UserViewModel? UpdateAlias(int id, UserAliasUpdateDTO user);
         public UserViewModel? UpdateCountry(int id, UserCountryUpdateDTO user);
